@@ -972,6 +972,130 @@ html.perf-lite .explode-label p{display:block}
 html.perf-lite .explode-label::before,html.perf-lite .explode-label::after{display:none!important}
 html.perf-lite .explode-total{margin-top:26px}
 </style>
+<style>
+/* ===== GLASS VIEW v9 — tasteful frosted glass on raised surfaces only =====
+   Desktop blur is modest (10–12px) and limited to: header, hero glass, CTA panel.
+   Every other surface fakes glass with translucent white + hairline border + shadow.
+   perf-lite / mobile: NO backdrop-filter anywhere — opaque tints carry the look. */
+:root{--glass-brd:rgba(255,255,255,.88);--glass-hi:inset 0 1px 0 rgba(255,255,255,.95),inset 0 0 0 1px rgba(255,255,255,.22)}
+/* — sticky header: true frosted glass — */
+header{background:linear-gradient(180deg,rgba(255,255,255,.78),rgba(250,250,255,.62));backdrop-filter:blur(10px) saturate(1.35);-webkit-backdrop-filter:blur(10px) saturate(1.35);border-bottom:1px solid rgba(255,255,255,.75);box-shadow:0 1px 0 rgba(99,102,241,.10),0 10px 32px rgba(37,99,235,.07)}
+/* — hero glass: floating stat chips + badge — */
+.float-card{background:linear-gradient(155deg,rgba(255,255,255,.82),rgba(255,255,255,.58));border:1px solid var(--glass-brd);backdrop-filter:blur(10px) saturate(1.4);-webkit-backdrop-filter:blur(10px) saturate(1.4);box-shadow:var(--glass-hi),0 24px 50px rgba(37,99,235,.18)}
+.hero-badge{background:linear-gradient(120deg,rgba(255,255,255,.80),rgba(255,255,255,.60));border:1px solid var(--glass-brd);backdrop-filter:blur(10px) saturate(1.35);-webkit-backdrop-filter:blur(10px) saturate(1.35);box-shadow:var(--glass-hi),0 10px 26px rgba(37,99,235,.12)}
+.btn-ghost{background:linear-gradient(155deg,rgba(255,255,255,.78),rgba(255,255,255,.55));border:1px solid var(--glass-brd);box-shadow:var(--glass-hi),0 10px 26px rgba(37,99,235,.10);backdrop-filter:none;-webkit-backdrop-filter:none}
+/* — spotlight dashboard mocks + exploded / film dashboards: fake glass, no blur — */
+.mock{background:linear-gradient(165deg,rgba(255,255,255,.88),rgba(244,247,255,.72));border:1px solid var(--glass-brd);box-shadow:var(--glass-hi),0 40px 80px rgba(37,99,235,.17)}
+.mock-bar{background:rgba(255,255,255,.55)}
+.mock-kpi,.mock-chart,.mock-row{background:rgba(255,255,255,.62)}
+.explode-layer .dash{background:linear-gradient(180deg,rgba(255,255,255,.90),rgba(240,244,255,.78));border:1px solid var(--glass-brd);box-shadow:var(--glass-hi),0 40px 80px rgba(37,99,235,.18)}
+.dash-kpis>div,.dash-chart,.dash-row{background:rgba(255,255,255,.62)}
+.explode-label{background:linear-gradient(155deg,rgba(255,255,255,.92),rgba(255,255,255,.82));border:1px solid var(--glass-brd);box-shadow:var(--glass-hi),0 22px 46px rgba(37,99,235,.17);backdrop-filter:none;-webkit-backdrop-filter:none}
+.film-browser{background:linear-gradient(180deg,rgba(255,255,255,.90),rgba(240,244,255,.78));border:1px solid var(--glass-brd);box-shadow:var(--glass-hi),0 44px 85px rgba(37,99,235,.18)}
+.fc-kpis>div,.fc-row{background:rgba(255,255,255,.78)}
+/* — project cards + service / industry / promise / step / contact panels: subtle glass — */
+.card{background:linear-gradient(165deg,rgba(255,255,255,.86),rgba(247,248,255,.68));border:1px solid rgba(255,255,255,.9);box-shadow:var(--glass-hi),0 22px 48px rgba(37,99,235,.10)}
+.card:hover{box-shadow:var(--glass-hi),0 30px 60px rgba(37,99,235,.17),0 0 0 1px rgba(34,211,238,.28)}
+.card.featured{background:linear-gradient(120deg,rgba(224,234,255,.88),rgba(245,243,255,.72) 58%,rgba(236,254,255,.78))}
+.svc{background:linear-gradient(165deg,rgba(255,255,255,.86),rgba(248,249,255,.66));border:1px solid rgba(255,255,255,.9);box-shadow:var(--glass-hi),0 16px 36px rgba(37,99,235,.08)}
+.svc:hover{box-shadow:var(--glass-hi),0 24px 48px rgba(6,182,212,.16)}
+.svc.big{background:linear-gradient(130deg,rgba(224,234,255,.88),rgba(237,233,254,.70) 55%,rgba(236,254,255,.76))}
+.ind{background:linear-gradient(155deg,rgba(255,255,255,.78),rgba(255,255,255,.55));border:1px solid rgba(255,255,255,.85);box-shadow:var(--glass-hi),0 10px 24px rgba(37,99,235,.06)}
+.promise-card{background:linear-gradient(155deg,rgba(255,255,255,.85),rgba(255,255,255,.62));border:1px solid rgba(255,255,255,.9);box-shadow:var(--glass-hi),0 16px 36px rgba(37,99,235,.08);backdrop-filter:none;-webkit-backdrop-filter:none}
+.promise-card.gold{background:linear-gradient(135deg,rgba(6,182,212,.16),rgba(124,58,237,.10)),linear-gradient(155deg,rgba(255,255,255,.82),rgba(255,255,255,.60))}
+.step{background:linear-gradient(165deg,rgba(255,255,255,.88),rgba(255,255,255,.66));border:1px solid rgba(255,255,255,.9);box-shadow:var(--glass-hi),0 14px 32px rgba(37,99,235,.08)}
+.contact-card{background:linear-gradient(165deg,rgba(255,255,255,.88),rgba(255,255,255,.68));border:1px solid rgba(255,255,255,.9);box-shadow:var(--glass-hi),0 18px 40px rgba(37,99,235,.09)}
+.stats{background:linear-gradient(180deg,rgba(255,255,255,.72),rgba(255,255,255,.45))}
+/* — small glass chips: tags, filter chips, security chips, LIVE pills — */
+.tag{background:linear-gradient(120deg,rgba(255,255,255,.75),rgba(238,240,255,.55));border:1px solid rgba(255,255,255,.9);box-shadow:var(--glass-hi),0 4px 12px rgba(37,99,235,.08)}
+.chip{background:linear-gradient(155deg,rgba(255,255,255,.80),rgba(255,255,255,.55));border:1px solid rgba(255,255,255,.9);box-shadow:var(--glass-hi),0 6px 16px rgba(37,99,235,.07)}
+.chip.active{background:var(--ai-grad);border-color:transparent;box-shadow:0 10px 28px rgba(37,99,235,.3)}
+.feats span{background:linear-gradient(120deg,rgba(255,255,255,.72),rgba(241,245,255,.55));border:1px solid rgba(255,255,255,.85);box-shadow:inset 0 1px 0 rgba(255,255,255,.9)}
+.sec-chip{background:linear-gradient(120deg,rgba(209,250,229,.88),rgba(255,255,255,.55));border:1px solid rgba(255,255,255,.9);box-shadow:var(--glass-hi),0 4px 12px rgba(16,185,129,.10)}
+.sec-chip.blue{background:linear-gradient(120deg,rgba(219,234,254,.88),rgba(255,255,255,.55))}
+.sec-chip.violet{background:linear-gradient(120deg,rgba(237,233,254,.90),rgba(255,255,255,.55))}
+.explode-hint{background:linear-gradient(120deg,rgba(255,255,255,.85),rgba(255,255,255,.60));border:1px solid var(--glass-brd);box-shadow:var(--glass-hi),0 8px 20px rgba(37,99,235,.10)}
+.film-chapter .ch-spec{background:linear-gradient(120deg,rgba(255,255,255,.82),rgba(255,255,255,.58));border:1px solid var(--glass-brd);box-shadow:var(--glass-hi)}
+.orbit-chip.ghost{background:linear-gradient(155deg,rgba(255,255,255,.88),rgba(255,255,255,.62));border:1px solid var(--glass-brd);box-shadow:var(--glass-hi),0 10px 24px rgba(37,99,235,.14);backdrop-filter:none;-webkit-backdrop-filter:none}
+.mock-bar::after{background:linear-gradient(120deg,rgba(209,250,229,.85),rgba(255,255,255,.5));border:1px solid rgba(255,255,255,.85);box-shadow:inset 0 1px 0 rgba(255,255,255,.9)}
+.mock-row .pill,.dash-row em{border:1px solid rgba(255,255,255,.7);box-shadow:inset 0 1px 0 rgba(255,255,255,.55)}
+/* — founder card: light glass touch, fake (no blur) for consistency — */
+.founder-card{background:linear-gradient(155deg,rgba(255,255,255,.88),rgba(255,255,255,.70));border:1px solid var(--glass-brd);box-shadow:var(--glass-hi),0 30px 60px rgba(37,99,235,.15);backdrop-filter:none;-webkit-backdrop-filter:none}
+/* — big CTA panel: richer frosted glass over the photo — */
+.cta-box{border:1px solid var(--glass-brd);box-shadow:var(--glass-hi),0 34px 70px rgba(37,99,235,.20)}
+.cta-box::before{background:linear-gradient(95deg,rgba(255,255,255,.90),rgba(238,242,255,.74) 55%,rgba(236,254,255,.62));backdrop-filter:blur(12px) saturate(1.35);-webkit-backdrop-filter:blur(12px) saturate(1.35)}
+.wa-float{border:1px solid rgba(255,255,255,.55);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 16px 40px rgba(34,197,94,.38)}
+/* ===== FEATURED SHOWCASE — hanging orbit + curved rail + scroll drive ===== */
+#products{content-visibility:visible;contain:none}
+.showcase{position:relative;height:270vh;margin-top:26px}
+.showcase-sticky{position:sticky;top:0;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:92px 0 26px;overflow:clip}
+.showcase-head{text-align:center;max-width:720px;margin:0 auto;padding-inline:18px;position:relative;z-index:3}
+.showcase-head .kicker{display:flex}
+.showcase-title{font-size:clamp(1.7rem,3.6vw,2.6rem);line-height:1.02;letter-spacing:-.03em;margin:0 0 8px;color:#17203A}
+.showcase-title em{font-family:Georgia,serif;font-style:italic;font-weight:400;color:#7C3AED}
+.showcase-sub{color:#5B6B84;margin:0 auto;font-size:14.5px;max-width:600px}
+.orbit-stage{position:relative;height:392px;max-width:960px;width:100%;margin:8px auto 0;perspective:1300px;z-index:2}
+.showcase-bgword{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);font-size:clamp(4.2rem,13vw,10.5rem);font-weight:1000;line-height:.85;letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1.5px rgba(99,102,241,.14);white-space:nowrap;pointer-events:none;z-index:0;text-transform:uppercase}
+.orbit-floor{position:absolute;left:50%;bottom:2px;transform:translateX(-50%);width:min(640px,84%);height:58px;background:radial-gradient(ellipse at center,rgba(37,99,235,.30),rgba(6,182,212,.13) 48%,transparent 72%);border-radius:50%;z-index:0;pointer-events:none}
+.orbit-card{position:absolute;left:50%;top:50%;width:308px;min-height:272px;padding:20px;border-radius:20px;display:flex;flex-direction:column;gap:9px;background:linear-gradient(160deg,rgba(255,255,255,.90),rgba(244,247,255,.72));border:1px solid var(--glass-brd);box-shadow:var(--glass-hi),0 26px 54px rgba(37,99,235,.16);color:#1E293B;cursor:pointer;will-change:transform,opacity;z-index:1}
+.orbit-card h4{margin:2px 0 0;font-size:19.5px;line-height:1.15;letter-spacing:-.02em;color:#17203A}
+.orbit-card p{margin:0;color:#475569;font-size:13.5px;line-height:1.5;flex:1}
+.orbit-card .oc-link{align-self:flex-start;margin-top:2px}
+.orbit-card:not(.is-front) .oc-link{pointer-events:none}
+.orbit-card.is-front{cursor:default;box-shadow:var(--glass-hi),0 34px 68px rgba(37,99,235,.24),0 0 44px rgba(6,182,212,.14);-webkit-box-reflect:below 12px linear-gradient(transparent 70%,rgba(255,255,255,.20))}
+.showcase-caption{text-align:center;max-width:640px;margin:10px auto 0;padding-inline:18px;position:relative;z-index:3;min-height:132px}
+.cap-tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:800;color:#4338CA;display:inline-block;padding:6px 12px;border-radius:999px;background:linear-gradient(120deg,rgba(255,255,255,.8),rgba(238,240,255,.55));border:1px solid var(--glass-brd);box-shadow:var(--glass-hi)}
+.cap-title{font-size:clamp(1.3rem,2.6vw,1.8rem);margin:10px 0 5px;letter-spacing:-.02em;color:#17203A}
+.cap-desc{color:#5B6B84;margin:0 auto 12px;font-size:14px;max-width:540px}
+.rail{position:relative;max-width:960px;width:100%;margin:2px auto 0;height:84px;z-index:3}
+.rail-item{position:absolute;left:50%;top:0;width:152px;margin-left:-76px;padding:10px 8px 9px;border-radius:14px;font-family:var(--mono);font-size:12px;font-weight:800;color:#334155;text-align:center;cursor:pointer;background:linear-gradient(155deg,rgba(255,255,255,.82),rgba(255,255,255,.55));border:1px solid var(--glass-brd);box-shadow:var(--glass-hi),0 10px 22px rgba(37,99,235,.10);will-change:transform,opacity}
+.rail-item small{display:block;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#7C8AA5;font-weight:700;margin-top:2px}
+.rail-item.is-active{background:linear-gradient(135deg,rgba(37,99,235,.16),rgba(6,182,212,.14),rgba(124,58,237,.14)),linear-gradient(155deg,rgba(255,255,255,.92),rgba(255,255,255,.7));color:#17203A;border-color:rgba(6,182,212,.55)}
+.showcase-controls{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:8px;position:relative;z-index:3}
+.sc-btn{width:46px;height:46px;border-radius:50%;font-size:18px;font-weight:900;color:#2563EB;cursor:pointer;background:linear-gradient(155deg,rgba(255,255,255,.88),rgba(255,255,255,.6));border:1px solid var(--glass-brd);box-shadow:var(--glass-hi),0 10px 22px rgba(37,99,235,.12)}
+.sc-btn:active{transform:scale(.94)}
+.sc-hint{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#7C8AA5;font-weight:700;text-align:center}
+/* — perf-lite / phone / small screens: NO orbit, NO rail transforms, NO blur — */
+html.perf-lite header,html.perf-lite .float-card,html.perf-lite .hero-badge,html.perf-lite .cta-box::before{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+html.perf-lite header{background:rgba(255,255,255,.97)}
+html.perf-lite .float-card,html.perf-lite .hero-badge{background:rgba(255,255,255,.96)}
+html.perf-lite .cta-box::before{background:linear-gradient(95deg,rgba(255,255,255,.97),rgba(238,242,255,.94))}
+html.perf-lite .card,html.perf-lite .svc,html.perf-lite .mock,html.perf-lite .contact-card,html.perf-lite .founder-card{background:rgba(255,255,255,.96)}
+html.perf-lite .showcase,html.perf-lite .showcase-sticky{height:auto;min-height:0}
+html.perf-lite .showcase-sticky{position:static;padding:14px 0 4px;overflow:visible}
+@media(max-width:900px){
+  .showcase{height:auto}
+  .showcase-sticky{position:static;min-height:0;padding:14px 0 4px;overflow:visible}
+  .orbit-stage{height:auto;perspective:none;margin-top:16px}
+  .showcase-bgword,.orbit-floor{display:none}
+  .orbit-card{display:none;position:relative;left:auto;top:auto;width:100%;max-width:520px;margin:0 auto;transform:none!important;opacity:1!important;-webkit-box-reflect:none;will-change:auto}
+  .orbit-card.is-front{display:flex}
+  .orbit-card:not(.is-front) .oc-link{pointer-events:auto}
+  .rail{height:auto;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px;padding-inline:6px}
+  .rail-item{position:static;width:auto;margin:0;transform:none!important;opacity:1!important;will-change:auto}
+  .showcase-caption{min-height:0;margin-top:16px}
+  .sc-hint{display:none}
+}
+/* perf-lite at ANY width (tablets included): same clean static featured card */
+html.perf-lite .orbit-stage{height:auto;perspective:none;margin-top:16px}
+html.perf-lite .showcase-bgword,html.perf-lite .orbit-floor{display:none}
+html.perf-lite .orbit-card{display:none;position:relative;left:auto;top:auto;width:100%;max-width:520px;margin:0 auto;transform:none!important;opacity:1!important;-webkit-box-reflect:none;will-change:auto}
+html.perf-lite .orbit-card.is-front{display:flex}
+html.perf-lite .rail{height:auto;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px;padding-inline:6px}
+html.perf-lite .rail-item{position:static;width:auto;margin:0;transform:none!important;opacity:1!important;will-change:auto}
+html.perf-lite .showcase-caption{min-height:0;margin-top:16px}
+html.perf-lite .sc-hint{display:none}
+@media (prefers-reduced-motion: reduce){
+  .showcase{height:auto}
+  .showcase-sticky{position:static;min-height:0}
+  .orbit-stage{height:auto;perspective:none}
+  .showcase-bgword,.orbit-floor{display:none}
+  .orbit-card{display:none;position:relative;left:auto;top:auto;width:100%;max-width:520px;margin:0 auto;transform:none!important;opacity:1!important;-webkit-box-reflect:none}
+  .orbit-card.is-front{display:flex}
+  .rail{height:auto;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+  .rail-item{position:static;width:auto;margin:0;transform:none!important;opacity:1!important}
+}
+</style>
 </head>
 <body>
 <canvas id="ambientCanvas" aria-hidden="true"></canvas>
@@ -1284,6 +1408,89 @@ html.perf-lite .explode-total{margin-top:26px}
   <div class="wordmark" data-word aria-hidden="true">Systems</div>
   <div class="wrap">
     <div class="reveal"><p class="kicker">The full showcase</p><h2>Every product. <em>Every demo live.</em></h2><p class="lead prod-head-note">Big companies show you pictures of their products. We give you the working product itself. Every “Live Demo” below opens the actual system — try the buttons, open the screens, check the reports.</p></div>
+    <!-- ============ FEATURED SHOWCASE — hanging orbit + curved rail, scroll-driven ============ -->
+    <div class="showcase" id="showcase">
+      <div class="showcase-sticky">
+        <div class="showcase-head reveal">
+          <p class="kicker" style="justify-content:center">Featured — the hanging showcase</p>
+          <h3 class="showcase-title">Seven flagships, <em>hanging live.</em></h3>
+          <p class="showcase-sub">The same orbit, curved rail and scroll motion as our newest shop demos — now showing projects. Scroll to rotate them, click any card to bring it front.</p>
+        </div>
+        <div class="orbit-stage" id="orbitStage">
+          <div class="showcase-bgword" aria-hidden="true">LIVE DEMOS</div>
+          <article class="orbit-card is-front" data-tag="Flagship · Education" data-desc="Fees, attendance, results &amp; payroll — one system for the whole institute, multi-campus ready." data-href="https://pipsedumanager.pythonanywhere.com/login/" data-cta="▶ Live Demo">
+            <span class="tag">Flagship · Education</span><span class="live-dot"><i></i> LIVE</span>
+            <h4>EduManager — College LMS &amp; CMS</h4>
+            <p>Fees, attendance, results &amp; payroll — one system for the whole institute.</p>
+            <div class="feats"><span>Fees &amp; Challans</span><span>Results / GPA</span><span>Payroll</span></div>
+            <a class="btn btn-gold btn-sm oc-link" href="https://pipsedumanager.pythonanywhere.com/login/" target="_blank" rel="noopener noreferrer">▶ Live Demo</a>
+          </article>
+          <article class="orbit-card" data-tag="POS · Retail &amp; Food" data-desc="Billing in under 5 seconds — udhaar khata, stock and QR online orders built for Pakistani shops." data-href="https://apni-dukaan.pages.dev" data-cta="▶ Live Demo">
+            <span class="tag">POS · Retail &amp; Food</span><span class="live-dot"><i></i> LIVE</span>
+            <h4>Apni Dukaan — Canteen + Grocery POS</h4>
+            <p>Billing in under 5 seconds, udhaar khata and QR orders built in.</p>
+            <div class="feats"><span>Fast Billing</span><span>Udhaar Khata</span><span>QR Orders</span></div>
+            <a class="btn btn-gold btn-sm oc-link" href="https://apni-dukaan.pages.dev" target="_blank" rel="noopener noreferrer">▶ Live Demo</a>
+          </article>
+          <article class="orbit-card" data-tag="POS · Distribution" data-desc="Factory khata, dealer-wise rates, daily reports and outstanding tracking — the full dealer workflow, digitised." data-href="https://wanda-pos.pages.dev" data-cta="▶ Live Demo">
+            <span class="tag">POS · Distribution</span><span class="live-dot"><i></i> LIVE</span>
+            <h4>Wanda Dealer POS</h4>
+            <p>Factory khata, dealer rates and outstanding tracking for feed dealers.</p>
+            <div class="feats"><span>Factory Khata</span><span>Dealer Rates</span><span>Outstanding</span></div>
+            <a class="btn btn-gold btn-sm oc-link" href="https://wanda-pos.pages.dev" target="_blank" rel="noopener noreferrer">▶ Live Demo</a>
+          </article>
+          <article class="orbit-card" data-tag="Live Website · Media" data-desc="Live scores, fixtures and results across all sports — an auto-updating site that never sleeps." data-href="https://live-sports.sportsalllive.workers.dev" data-cta="▶ Visit Live Site">
+            <span class="tag">Live Website · Media</span><span class="live-dot"><i></i> LIVE</span>
+            <h4>Live Sports — All Games Live</h4>
+            <p>Live scores, fixtures and results across all sports — updates itself daily.</p>
+            <div class="feats"><span>Live Scores</span><span>Fixtures</span><span>16+ Languages</span></div>
+            <a class="btn btn-gold btn-sm oc-link" href="https://live-sports.sportsalllive.workers.dev" target="_blank" rel="noopener noreferrer">▶ Visit Live Site</a>
+          </article>
+          <article class="orbit-card" data-tag="Website · Garments" data-desc="Animated garments website with its own admin panel and a virtual try-on / fitting room — pick a dress, see it on the model." data-href="https://future-ai-demos.pages.dev/day-to-day/" data-cta="▶ Try It Live">
+            <span class="tag">Website · Garments</span><span class="live-dot"><i></i> LIVE</span>
+            <h4>Day to Day Shopping Arcade</h4>
+            <p>Animated garments site with admin panel and virtual try-on fitting room.</p>
+            <div class="feats"><span>Virtual Try-On</span><span>Admin Panel</span><span>Offers</span></div>
+            <a class="btn btn-gold btn-sm oc-link" href="https://future-ai-demos.pages.dev/day-to-day/" target="_blank" rel="noopener noreferrer">▶ Try It Live</a>
+          </article>
+          <article class="orbit-card" data-tag="Website · Boutique" data-desc="Animated ladies boutique with admin panel and virtual try-on — new collections on the model, colours switched in one tap." data-href="https://future-ai-demos.pages.dev/zahra-rubab/" data-cta="▶ Try It Live">
+            <span class="tag">Website · Boutique</span><span class="live-dot"><i></i> LIVE</span>
+            <h4>Zahra Rubab Ladies Boutique</h4>
+            <p>Collections on the model — virtual try-on, colours switched in one tap.</p>
+            <div class="feats"><span>Virtual Try-On</span><span>Admin Panel</span><span>Collections</span></div>
+            <a class="btn btn-gold btn-sm oc-link" href="https://future-ai-demos.pages.dev/zahra-rubab/" target="_blank" rel="noopener noreferrer">▶ Try It Live</a>
+          </article>
+          <article class="orbit-card" data-tag="Website · Bridal Rental" data-desc="Bridal dresses on rent — animated rental website with virtual try-on and booking. Pick the dress, try it on the model, book your date." data-href="https://future-ai-demos.pages.dev/gul-glam/" data-cta="▶ Try It Live">
+            <span class="tag">Website · Bridal Rental</span><span class="live-dot"><i></i> LIVE</span>
+            <h4>Gul &amp; Glam — Bridal Rental</h4>
+            <p>Pick the dress, try it on the model, book your date — all live.</p>
+            <div class="feats"><span>Virtual Try-On</span><span>Rental Booking</span><span>Admin Panel</span></div>
+            <a class="btn btn-gold btn-sm oc-link" href="https://future-ai-demos.pages.dev/gul-glam/" target="_blank" rel="noopener noreferrer">▶ Try It Live</a>
+          </article>
+          <div class="orbit-floor" aria-hidden="true"></div>
+        </div>
+        <div class="showcase-caption" aria-live="polite">
+          <span class="cap-tag" id="capTag">Flagship · Education</span>
+          <h4 class="cap-title" id="capTitle">EduManager — College LMS &amp; CMS</h4>
+          <p class="cap-desc" id="capDesc">Fees, attendance, results &amp; payroll — one system for the whole institute, multi-campus ready.</p>
+          <a class="btn btn-gold btn-sm" id="capLink" href="https://pipsedumanager.pythonanywhere.com/login/" target="_blank" rel="noopener noreferrer">▶ Live Demo</a>
+        </div>
+        <div class="rail" id="showcaseRail" aria-label="Projects on the curved rail">
+          <button class="rail-item is-active" type="button">EduManager<small>Education LMS</small></button>
+          <button class="rail-item" type="button">Apni Dukaan<small>POS · Retail</small></button>
+          <button class="rail-item" type="button">Wanda POS<small>Distribution</small></button>
+          <button class="rail-item" type="button">Live Sports<small>Live Website</small></button>
+          <button class="rail-item" type="button">Day to Day<small>Garments</small></button>
+          <button class="rail-item" type="button">Zahra Rubab<small>Boutique</small></button>
+          <button class="rail-item" type="button">Gul &amp; Glam<small>Bridal Rental</small></button>
+        </div>
+        <div class="showcase-controls">
+          <button class="sc-btn" id="scPrev" type="button" aria-label="Previous project">←</button>
+          <span class="sc-hint">Scroll rotates · Click a card to bring it front</span>
+          <button class="sc-btn" id="scNext" type="button" aria-label="Next project">→</button>
+        </div>
+      </div>
+    </div>
     <div class="filters reveal" role="tablist" aria-label="Filter products">
       <button class="chip active" data-filter="all">All Products</button>
       <button class="chip" data-filter="business">Business Systems</button>
@@ -2078,6 +2285,146 @@ html.perf-lite .explode-total{margin-top:26px}
       });
     },4600);
   }
+})();
+</script>
+<script>
+(function(){
+  "use strict";
+  var wrap=document.getElementById('showcase');
+  if(!wrap) return;
+  var cards=[].slice.call(wrap.querySelectorAll('.orbit-card'));
+  var railItems=[].slice.call(wrap.querySelectorAll('.rail-item'));
+  var N=cards.length, STEP=360/N;
+  if(!N) return;
+  var reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var lite=document.documentElement.classList.contains('perf-lite');
+  var small=matchMedia('(max-width: 900px)').matches;
+  var capTag=document.getElementById('capTag'), capTitle=document.getElementById('capTitle'),
+      capDesc=document.getElementById('capDesc'), capLink=document.getElementById('capLink'),
+      capBox=wrap.querySelector('.showcase-caption');
+  var front=0;
+
+  function setFront(i,animate){
+    front=((i%N)+N)%N;
+    cards.forEach(function(c,j){
+      c.classList.toggle('is-front',j===front);
+      var a=c.querySelector('.oc-link');
+      if(a) a.tabIndex=(j===front)?0:-1;
+    });
+    railItems.forEach(function(r,j){ r.classList.toggle('is-active',j===front); });
+    var c=cards[front];
+    if(capTag) capTag.textContent=c.getAttribute('data-tag')||'';
+    if(capTitle) capTitle.textContent=c.querySelector('h4').textContent;
+    if(capDesc) capDesc.innerHTML=c.getAttribute('data-desc')||'';
+    if(capLink){ capLink.setAttribute('href',c.getAttribute('data-href')||'#'); capLink.textContent=c.getAttribute('data-cta')||'▶ Live Demo'; }
+    if(animate&&capBox&&capBox.animate&&!reduced){
+      capBox.animate([{opacity:.35,transform:'translateY(7px)'},{opacity:1,transform:'none'}],{duration:380,easing:'cubic-bezier(.16,.85,.24,1)'});
+    }
+  }
+
+  /* ---------- static mode: phone / perf-lite / reduced motion / small screens ---------- */
+  if(lite||reduced||small){
+    setFront(0,false);
+    railItems.forEach(function(r,j){ r.addEventListener('click',function(){ setFront(j,true); }); });
+    var pS=document.getElementById('scPrev'), nS=document.getElementById('scNext');
+    if(pS) pS.addEventListener('click',function(){ setFront(front-1,true); });
+    if(nS) nS.addEventListener('click',function(){ setFront(front+1,true); });
+    return;
+  }
+
+  /* ---------- desktop: hanging orbit + curved rail + scroll drive ---------- */
+  var angle=0, goal=0, lastScrollAngle=0, lastScrollT=0, hovering=false, visible=false, raf=null, lastT=0;
+
+  function goTo(i){
+    var cur=((goal%360)+360)%360;
+    var want=((-i*STEP)%360+360)%360;
+    var diff=((want-cur+540)%360)-180;
+    goal+=diff;
+  }
+  function render(now){
+    var dt=Math.min((now-lastT)/1000,.05); lastT=now;
+    if(!hovering&&!document.hidden&&now-lastScrollT>2600) goal+=5.5*dt; /* slow idle orbit */
+    angle+=(goal-angle)*Math.min(1,dt*5.2);
+    if(Math.abs(goal-angle)<.005) angle=goal;
+    var frontFloat=-angle/STEP;
+    cards.forEach(function(c,i){
+      var a=(i*STEP+angle)*Math.PI/180;
+      var cos=Math.cos(a), sin=Math.sin(a);
+      var x=sin*335, z=cos*215;
+      var s=.70+.30*((cos+1)/2);
+      var o=.34+.66*Math.pow((cos+1)/2,1.15);
+      var y=(1-cos)*5;
+      var rz=sin*2.6;
+      c.style.transform='translate(-50%,-54%) translate3d('+x.toFixed(1)+'px,'+y.toFixed(1)+'px,'+z.toFixed(1)+'px) scale('+s.toFixed(3)+') rotateZ('+rz.toFixed(2)+'deg)';
+      c.style.opacity=o.toFixed(3);
+      c.style.zIndex=String(100+Math.round(z));
+    });
+    railItems.forEach(function(r,j){
+      var rel=((j-frontFloat)%N+N)%N; if(rel>N/2) rel-=N;
+      var ar=Math.abs(rel);
+      var x=rel*176, y=rel*rel*8.5;
+      var s=Math.max(.62,1-ar*.12), o=Math.max(.30,1-ar*.20);
+      r.style.transform='translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px) scale('+s.toFixed(3)+')';
+      r.style.opacity=o.toFixed(3);
+      r.style.zIndex=String(50-Math.round(ar*10));
+    });
+    var f=((Math.round(frontFloat)%N)+N)%N;
+    if(f!==front) setFront(f,true);
+    raf=requestAnimationFrame(render);
+  }
+  function startLoop(){ if(raf===null){ lastT=performance.now(); raf=requestAnimationFrame(render); } }
+  function stopLoop(){ if(raf!==null){ cancelAnimationFrame(raf); raf=null; } }
+
+  new IntersectionObserver(function(es){ es.forEach(function(e){
+    visible=e.isIntersecting;
+    if(visible) startLoop(); else stopLoop();
+  }); },{threshold:.02}).observe(wrap);
+  document.addEventListener('visibilitychange',function(){ if(document.hidden) stopLoop(); else if(visible) startLoop(); });
+
+  /* scroll drives the orbit — delta-based, fully reversible, composes with clicks + idle drift */
+  var tick=false;
+  function onScroll(){
+    if(tick) return; tick=true;
+    requestAnimationFrame(function(){
+      tick=false;
+      var r=wrap.getBoundingClientRect();
+      var range=wrap.offsetHeight-innerHeight;
+      if(range<=0||r.bottom<0||r.top>innerHeight) return;
+      var q=Math.max(0,Math.min(1,(-r.top)/range));
+      var sa=-q*360; /* one full rotation across the showcase scroll */
+      goal+=sa-lastScrollAngle;
+      lastScrollAngle=sa;
+      lastScrollT=performance.now();
+    });
+  }
+  addEventListener('scroll',onScroll,{passive:true});
+  addEventListener('resize',onScroll,{passive:true});
+
+  var stage=document.getElementById('orbitStage');
+  if(stage){
+    stage.addEventListener('pointerenter',function(){ hovering=true; });
+    stage.addEventListener('pointerleave',function(){ hovering=false; });
+    stage.addEventListener('focusin',function(){ hovering=true; });
+    stage.addEventListener('focusout',function(){ hovering=false; });
+  }
+  cards.forEach(function(c,i){
+    c.addEventListener('click',function(e){
+      if(i===front) return; /* front card: let its demo link work */
+      e.preventDefault();
+      lastScrollT=performance.now();
+      goTo(i);
+    });
+  });
+  railItems.forEach(function(r,j){
+    r.addEventListener('click',function(){ lastScrollT=performance.now(); goTo(j); });
+    r.addEventListener('pointerenter',function(){ if(matchMedia('(pointer: fine)').matches){ lastScrollT=performance.now(); goTo(j); } });
+  });
+  var pB=document.getElementById('scPrev'), nB=document.getElementById('scNext');
+  if(pB) pB.addEventListener('click',function(){ lastScrollT=performance.now(); goal+=STEP; });
+  if(nB) nB.addEventListener('click',function(){ lastScrollT=performance.now(); goal-=STEP; });
+
+  setFront(0,false);
+  onScroll();
 })();
 </script>
 </body>
